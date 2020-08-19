@@ -11,6 +11,7 @@ pool:
 
 steps:
 - task: DotNetCoreCLI@2
+  displayName: Restore
   inputs:
     command: 'restore'
     projects: |
@@ -18,6 +19,7 @@ steps:
       !**/*SeleniumUiTests.csproj
     feedsToUse: 'select'
 - task: DotNetCoreCLI@2
+  displayName: Build
   inputs:
     command: 'build'
     projects: |
@@ -25,11 +27,13 @@ steps:
       !**/*SeleniumUiTests.csproj
     arguments: '--configuration $(BuildConfiguration)'
 - task: DotNetCoreCLI@2
+  displayName: Test
   inputs:
     command: 'test'
     projects: '**/*[Tt]est/*.csproj'
     arguments: '--configuration $(BuildConfiguration)'
 - task: DotNetCoreCLI@2
+  displayName: Publish
   inputs:
     command: 'publish'
     publishWebProjects: true
